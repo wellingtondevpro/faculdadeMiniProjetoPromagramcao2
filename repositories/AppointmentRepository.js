@@ -1,14 +1,12 @@
-import Appointment from "../models/Appointment";
-
-const appointment = require("../models/appointment");
+import Appointment from "../models/appointment";
 
 const getAllAppointments = async () => {
-    return await appointment.find();
+    return await Appointment.find();
 }
 
 const getAppointment = async (id) => {
     try{
-        return await appointment.findById(id);
+        return await Appointment.findById(id);
     }catch (erro){
         throw new erro("No hay en el appointment" + error);
     }
@@ -23,10 +21,29 @@ const saveAppointment = async ({date, doctorId, pacienteId,}) => {
     }
 }
 
-const AppointmentRepository = {
+const updateAppointment = async (id, {date, doctorId, pacientId}) => {
+    try{
+        return await Appointment.findByIdAndUpdate(id ,{date, doctorId, pacientId}, {new: true});
+    }catch (erro){
 
-
-
+    }
 }
 
-export default AppointmentRepository;
+const deleteAppointment = async (id) => {
+    try {
+        return await Appointment.findByIdAndDelete(id);
+    }catch (error) {
+        throw new error("No hay en el appointment" + error);
+    }
+}
+
+
+const appointmentRepository = {
+    getAppointment,
+    getAllAppointments,
+    saveAppointment,
+    updateAppointment,
+    deleteAppointment,
+}
+
+export default appointmentRepository;
