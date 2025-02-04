@@ -1,11 +1,19 @@
-const express = require('express');
+
+import express from 'express';
+import pkg from "body-parser"
+import router from './routes/routes.js';
+import db from './database/database.js'
+
 const app = express();
-const routes = require('./routes/routes');
+const { json, urlencoded } = pkg;
 
-app.get("/", routes);
 
-app.use((req, res) => {
-    res.status(404).render('404');
+app.use(json());
+app.use(urlencoded({extended: true}));
+
+app.listen(3000, () => {
+    console.log(`Server started on port 3000`);
 })
 
+app.use("/", router);
 
